@@ -1,0 +1,4 @@
+{
+  "mongoURI": "mongodb+srv://Daniel:Madmagictaco2428@cluster-api-fukqq.mongodb.net/voting_poll?retryWrites=true",
+  "jwtSecret": "SECRET"
+}
