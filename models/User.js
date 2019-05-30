@@ -17,7 +17,8 @@ const userSchema =  new mongoose.Schema({
   date: {
     type: Date,
     default: Date.now
-  }
+  },
+  polls: [{type: mongoose.Schema.Types.ObjectId, ref: 'polls'}]
 })
 
 module.exports = mongoose.model('users', userSchema)
