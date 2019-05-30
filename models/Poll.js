@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const optionSchema = new mongoose.Schema({
-  options: String,
+  option: String,
   votes: {
     type: Number,
     default: 0
@@ -10,13 +10,18 @@ const optionSchema = new mongoose.Schema({
 
 const pollSchema = new mongoose.Schema({
   user: {
-    type:
-  }
+    type: mongoose.Schema.Types.ObjectId,
+    ref:'users'
+  },
   question: {
     type: String
   },
-  options:[{}],
-  voted: [{type: mongoose.Schema.Types.ObjectId, ref: 'users'}]
+  options:[optionSchema],
+  voted: [{type: mongoose.Schema.Types.ObjectId, ref: 'users'}],
+  created: {
+    type: Date,
+    default: Date.now
+  }
 })
 
 module.exports = mongoose.model('polls', pollSchema)

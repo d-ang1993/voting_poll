@@ -50,7 +50,6 @@ router.post(
       const salt = await bcrypt.genSalt(10);
       user.password = await bcrypt.hash(password, salt);
 
-
       await user.save();
 
       const payload = {
@@ -59,7 +58,7 @@ router.post(
           name,
           email
         }
-      }
+      };
 
       jwt.sign(
         payload,
@@ -67,9 +66,9 @@ router.post(
         { expiresIn: 360000 },
         (err, token) => {
           if (err) throw err;
-          res.json({token})
+          res.json({ token });
         }
-      )
+      );
     } catch (err) {
       console.log(err.message);
       res.status(500).send("Server Error");
