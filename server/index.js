@@ -1,8 +1,10 @@
 require('dotenv').config();
+const cors = require('cors')
 const express = require('express')
 const app = express()
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 5000
 const connectDB = require('./config/db')
+
 
 
 //Connect to the DB
@@ -11,6 +13,7 @@ connectDB()
 // Init Middleware
 // Already part of Express now, don't need to install body parser
 app.use(express.json({extended: false}))
+app.use(cors())
 
 //Define Routes
 app.use('/api/users', require('./routes/api/users'))
