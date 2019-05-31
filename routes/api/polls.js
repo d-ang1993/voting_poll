@@ -111,15 +111,15 @@ router.delete("/:id", auth, async (req, res) => {
     }
 
     const user = await User.findById(userId);
-    console.log(user.polls)
-    console.log(pollId.toString())
+    console.log(user.polls);
+    console.log(pollId.toString());
 
-    user.polls.splice(pollId.toString(), 1)
+    user.polls.splice(pollId.toString(), 1);
 
-    await user.save()
-    await poll.remove()
+    await user.save();
+    await poll.remove();
 
-    res.status(202).json({msg: "Poll removed"})
+    res.status(202).json({ msg: "Poll removed" });
   } catch (err) {
     console.log(err);
     res.status(500).res("Server Error");
@@ -128,21 +128,38 @@ router.delete("/:id", auth, async (req, res) => {
 
 //@route POST api/poll/:id
 //@desc Vote for a poll
-//@access Public
+//@access Private
 
 router.post("/:id", auth, async (req, res) => {
+  const { id: pollId } = req.params;
+  const { id: userId } = req.user;
+  const { answer } = req.body;
   try {
-    const { id: pollId } = req.params;
-    const { id: userId } = req.user;
-    const { answer } = req.body;
-    console.log(answer);
     if (answer) {
-      const poll = Poll.findById(id);
+      const poll = await Poll.findById(pollId);
+
       if (!poll) return res.status(400).json({ msg: "Poll not found" });
 
-      // const vote = poll.options.map(option => {
-      //   option.option === answer ?
-      // })
+      const vote = poll.options.map(option => {
+        if (option.option === answer) {
+          return {
+            option: option.option,
+            _id: option._id,
+            votes: option.votes + 1
+          };
+        } else {
+          return option;
+        }
+      });
+
+      console.log(vote);
+
+      if (vote) {
+        poll.voted.push(userId);
+        poll.options = vote;
+        await poll.save();
+      }
+      return res.status(202).json({ msg: "Voted!" });
     }
   } catch (err) {
     console.log(err.message);
