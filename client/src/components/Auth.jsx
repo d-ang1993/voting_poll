@@ -1,21 +1,41 @@
 import React from "react";
 import { connect } from "react-redux";
-
+import decode from 'jwt-decode'
 import { authUser, logout } from "../store/actions";
+
 class Auth extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      authenticated: "false"
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentDidMount() {
+  const token = localStorage.getItem('jwtToken');
+  console.log(localStorage);
+  if (token) {
+    this.setState({authenticated: true})
+    const { user } = decode(token)
+    console.log(user)
+    localStorage.setItem('user', user)
+  }
+
+  console.log(localStorage.getItem('user'))
+
+  // console.log(this.state.authenticated)
+
+  }
+
+
   handleChange(e) {
+
     this.setState({
       [e.target.name]: e.target.value
     });
@@ -25,7 +45,9 @@ class Auth extends React.Component {
     const { authType } = this.props;
     e.preventDefault();
 
-    this.props.authUser(authType, { email, password })
+    console.log("hello")
+
+    // this.props.authUser(authType, { email, password })
   }
 
   render() {
@@ -54,7 +76,4 @@ class Auth extends React.Component {
   }
 }
 
-export default connect(
-  () => ({}),
-  { authUser, logout }
-)(Auth);
+export default Auth

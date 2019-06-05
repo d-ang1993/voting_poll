@@ -7,16 +7,17 @@ import Auth from '../components/Auth'
 
 import {setCurrentUser, addError, setToken} from '../store/actions';
 
-if (localStorage.jwtToken) {
-  setToken(localStorage.jwtToken);
+// if (localStorage.jwtToken) {
+//   setToken(localStorage.jwtToken);
+//
+//   try{
+//     store.dispatch(setCurrentUser(decode(localStorage.jwtToken)));
+//   } catch(err) {
+//     store.dispatch(setCurrentUser({}))
+//     store.dispatch(addError(err));
+//   }
+// }
 
-  try{
-    store.dispatch(setCurrentUser(decode(localStorage.jwtToken)));
-  } catch(err) {
-    store.dispatch(setCurrentUser({}))
-    store.dispatch(addError(err));
-  }
-}
 
 const App = () => (
   <Provider store={store}>
