@@ -5,13 +5,13 @@ import { connect } from "react-redux";
 const Alert = ({ alerts }) => {
   // let descriptionAlert;
 
-  // if (alerts !== null && alerts.length > 0) {
-  //   return (<div>
-  //     {alerts.map(alert => {
-  //       return alert.msg
-  //     })}
-  //   </div>)
-  // }
+  if (alerts !== null && alerts.length > 0) {
+    return (<div>
+      {alerts.map(alert => {
+        return alert.msg
+      })}
+    </div>)
+  }
 
   // if (alerts !== null && alerts.length > 0) {
   //   alerts.map(alert => {
@@ -23,7 +23,7 @@ const Alert = ({ alerts }) => {
   //
   // return <div>{descriptionAlert}</div>;
   return (
-    
+
     alerts !== null &&
     alerts.length > 0 &&
     alerts.map(alert => (
